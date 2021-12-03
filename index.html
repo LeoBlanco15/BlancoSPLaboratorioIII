@@ -1,0 +1,61 @@
+<html lang="en">
+    
+<head>
+    
+    <link rel="stylesheet" href="./css/custom.css">
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./js/clases.js" ></script>    
+    <script src="./js/tabla.js" ></script>    
+    <title>Parcial Leonardo Blanco</title>
+</head>
+<body>           
+    <div class="PopUp" id="Alta" hidden>
+        <h1>Alta Vehiculo</h1>              
+        <div class="row"> <p>ID:</p> <input type="text" id="id"/> </div>
+        <div class="row"> <p>Marca:</p> <input type="text" id="nombre"/> </div>
+        <div class="row"> <p>Modelo:</p> <input type="text" id="apellido"/></div>
+        <div class="row">  <p>Precio:</p> <input type="text" id="edad"/></div>
+        <div class="row">  <p>Tipo:</p>  <select id="sexo" id="sexo"> </select> </div>       
+        <div class="row">  <input type="button" class="btn-promedio" value="Agregar" onclick="agregarCliente()"  />
+            <input type="button" value="Eliminar" onclick="CerrarAlta()"  class="btn-borrar" />
+        </div>
+    </div>
+    <div class="divFlex">
+
+        
+        <div class="column-30">
+            <h1>FILTROS</h1>
+                <div class="row">  <p>Filtrar por:</p> <select id="sexo_filtro" onchange="filtrarTabla()"> </select> <input  class="btn-borrar" type="button" value="x" onclick="LimpiarFiltro()"  /></div>
+                <div class="row">  <p>Promedio edad:</p> <input type="text" id="prom"/> </select></div>  
+                <div class="row">  <input  type="button"  class="btn-promedio" value="Calcular promedio" onclick="calcularPromedio()"  /></div>  
+        </div>  
+        <div class="column-70">
+            <div class="data_table">
+                <input type="button" class="btn-agregar" value="Alta" id="AgregarButton" onclick="AbirAlta()"/>
+                <h1>TABLA</h1>
+                <label><input type="checkbox" checked="true" id="cb_id"  onchange="CambiarEstadoColumna(0)">ID</label>
+                    <label><input type="checkbox" id="cb_nombre"  checked="true"  onchange="CambiarEstadoColumna(1)">Marca</label>
+                    <label><input type="checkbox" id="cb_apellido"   checked="true" onchange="CambiarEstadoColumna(2)">Modelo</label>
+                    <label><input type="checkbox" id="cb_edad"  checked="true"  onchange="CambiarEstadoColumna(3)">Precio</label>                   
+            </div>
+            <table id="tabla" class="grilla tabla">
+                    <thead>                    
+                    <tr>
+                        <th > ID</th>
+                        <th> Marca</th>
+                        <th> Modelo</th>
+                        <th> Precio</th>
+                        <th>Accion</th>
+                    </tr>
+                    </thead>
+                    <tbody id="body_id" >
+                    </tbody>
+                </table>
+            </div>
+    </div>
+    
+</body>
+</html>
