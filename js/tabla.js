@@ -58,15 +58,29 @@ async function getDatos(exito, error) {
 
 function getDatosExitoso(exito) {
   exito.forEach((element) => {
-    let cliente = new Vehiculo(
-      element.id,
-      element.make,
-      element.model,
-      element.price
-    );
+    let cliente = VehiculoFilter(element);
     personas.push(cliente);
   });
   llenarTabla(personas);
+}
+function VehiculoFilter(element)
+{
+  if(element.cantidadPuertas != null)
+  return new Auto(
+    element.id,
+    element.make,
+    element.model,
+    element.price,
+    element.cantidadPuertas
+  );
+  else
+    return new Camioneta(
+      element.id,
+      element.make,
+      element.model,
+      element.price,
+      element.cuatroXcuatro
+    );
 }
 
 function errorGetDatos() {
@@ -98,10 +112,26 @@ function llenarFila(personas) {
   fila.onclick = function (event) {
     asignarClick(personas);
   };
+  let button = document.createElement("button");
+  button.onclick = function(event)
+  {EliminarById(id)};
+  fila.appendChild(button);
 
   tabla.appendChild(fila);
 }
-
+function EliminarById(id)
+{
+  personas.forEach((element, index) => {
+    if (element.id == id) {
+      flag = true;
+      personas.splice(index, 1);
+    }
+  });
+  if (!flag) {
+    alert("No se encontró el id");
+  }
+  llenarTabla(personas);
+}
 function llenarTabla(elementos) {
   vaciarTabla();
   elementos.forEach((element) => {
@@ -186,8 +216,10 @@ function eliminarPersona() {
 }
 
 function calcularPromedio() {
+  var sexo_selected = document.getElementById("sexo_filtro").value;
   var total = 0;
-  total = personas.reduce((sum, per) => sum + parseInt(per.precio), 0);
+  personas2 = personas.filter((persona) => persona.type === sexo_selected);
+  total = personas2.reduce((sum, per) => sum + parseInt(per.precio), 0);
   total = total / personas.length;
   document.getElementById("prom").value = total;
 }
