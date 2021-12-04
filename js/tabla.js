@@ -16,10 +16,10 @@ function llenarSelect() {
   let select = $("sexo");
   let opcion = document.createElement("option");
   opcion.innerHTML = "Auto";
-  opcion.value = "Auto";
+  opcion.value = 'Auto';
   let opcion2 = document.createElement("option");
   opcion2.innerHTML = "Camioneta";
-  opcion2.value = "Camioneta";
+  opcion2.value = 'Camioneta';
   select.appendChild(opcion);
   select.appendChild(opcion2);
 }
@@ -28,10 +28,10 @@ function llenarSelectFiltro() {
   let select_filtro = $("sexo_filtro");
   let opcion = document.createElement("option");
   opcion.innerHTML = "Auto";
-  opcion.value = "Auto";
+  opcion.value = 'Auto';
   let opcion2 = document.createElement("option");
   opcion2.innerHTML = "Camioneta";
-  opcion2.value = "Camioneta";
+  opcion2.value = 'Camioneta';
   select_filtro.appendChild(opcion);
   select_filtro.appendChild(opcion2);
 }
@@ -117,10 +117,10 @@ function vaciarTabla() {
 }
 
 function agregarCliente() {
-  var nombre = document.getElementById("nombre").value;
-  var apellido = document.getElementById("apellido").value;
+  var marca = document.getElementById("nombre").value;
+  var modelo = document.getElementById("apellido").value;
   var sexo = document.getElementById("sexo").value;
-  var edad = document.getElementById("edad").value;
+  var precio = document.getElementById("edad").value;
 
   let id = 0;
   personas.forEach((persona) => {
@@ -128,13 +128,24 @@ function agregarCliente() {
       id = persona.id;
     }
   });
-  if (nombre != "" && apellido != "" && sexo != "" && edad != "") {
-    var newCliente = new Auto(id + 1, nombre, apellido, edad, sexo);
+  if (marca != "" && modelo != "" && sexo != "" && precio != "") {
+    var newCliente = NewVehiculo(id + 1, marca, modelo, precio);
     personas.push(newCliente);
     llenarTabla(personas);
     CerrarAlta();
   } else {
     alert("Debe completar todos los campos");
+  }
+}
+function NewVehiculo(id, marca, modelo, precio)
+{
+  if($("sexo").value == 'Auto')
+  {
+    return new Auto(id + 1, marca, modelo, precio, 4);
+  }
+  else
+  {
+    return new Camioneta(id + 1, marca, modelo, precio, true);
   }
 }
 
@@ -176,14 +187,14 @@ function eliminarPersona() {
 
 function calcularPromedio() {
   var total = 0;
-  total = personas.reduce((sum, per) => sum + parseInt(per.edad), 0);
+  total = personas.reduce((sum, per) => sum + parseInt(per.precio), 0);
   total = total / personas.length;
   document.getElementById("prom").value = total;
 }
 
 function filtrarTabla() {
   var sexo_selected = document.getElementById("sexo_filtro").value;
-  personas2 = personas.filter((persona) => persona.sexo == sexo_selected);
+  personas2 = personas.filter((persona) => persona.type === sexo_selected);
   llenarTabla(personas2);
 }
 
